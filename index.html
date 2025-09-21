@@ -10,6 +10,13 @@
 
   <title>Study Planner - Planeje seus Estudos</title>
 
+  <!-- Preload de recursos importantes -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" as="style">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
   <!-- Styles -->
   <link rel="stylesheet" href="css/main.css">
 
@@ -18,7 +25,42 @@
 </head>
 
 <body>
+  <main class="container">
+    <header>
+      <h1 class="page-title">Plano de Estudos</h1>
+      <button id="create-plan-button">
+        Criar Novo Plano
+      </button>
+    </header>
 
+    <section>
+      <h2>Cursos em Andamento</h2>
+      <ul id="ongoing-courses" role="list">
+        <!-- <li class="loading">
+          <img src="assets/loading.gif" alt="Carregando..." width="32" height="32">
+        </li> -->
+        <li class="empty-message">
+          <div class="empty-icon">📚</div>
+          <h3 class="empty-title">Nenhum curso em andamento</h3>
+          <p class="empty-subtitle">Clique em "Criar Novo Plano" para começar seus estudos!</p>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Cursos Finalizados</h2>
+      <ul id="completed-courses" role="list">
+        <!-- <li class="loading">
+          <img src="assets/loading.gif" alt="Carregando..." width="32" height="32">
+        </li> -->
+        <li class="empty-message">
+          <div class="empty-icon">🎓</div>
+          <h3 class="empty-title">Nenhum curso finalizado</h3>
+          <p class="empty-subtitle">Complete seus primeiros cursos para vê-los aqui!</p>
+        </li>
+      </ul>
+    </section>
+  </main>
 </body>
 
 </html>

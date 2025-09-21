@@ -32,8 +32,7 @@ ol[role='list'] {
 /* Set core body defaults */
 body {
   min-height: 100vh;
-  line-height: 1.5;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+  font-family: Roboto, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
     'Helvetica Neue', Arial, sans-serif;
   font-size: 1rem;
   color: #1a1a1a;
@@ -46,19 +45,6 @@ body {
   text-rendering: optimizeSpeed;
 }
 
-/* Set shorter line heights on headings and interactive elements */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-button,
-input,
-label {
-  line-height: 1.1;
-}
-
 /* Balance text wrapping on headings */
 h1,
 h2,
@@ -67,69 +53,7 @@ h4,
 h5,
 h6 {
   text-wrap: balance;
-  font-weight: 600;
-  margin-bottom: 0.75em;
-}
-
-/* Typography scale */
-h1 {
-  font-size: 2.5rem;
-}
-
-h2 {
-  font-size: 2rem;
-}
-
-h3 {
-  font-size: 1.75rem;
-}
-
-h4 {
-  font-size: 1.5rem;
-}
-
-h5 {
-  font-size: 1.25rem;
-}
-
-h6 {
-  font-size: 1.125rem;
-}
-
-/* Paragraph spacing */
-p {
-  margin-bottom: 1em;
-}
-
-/* Responsive typography */
-@media (max-width: 768px) {
-  html {
-    font-size: 14px;
-  }
-
-  h1 {
-    font-size: 2rem;
-  }
-
-  h2 {
-    font-size: 1.75rem;
-  }
-
-  h3 {
-    font-size: 1.5rem;
-  }
-
-  h4 {
-    font-size: 1.25rem;
-  }
-
-  h5 {
-    font-size: 1.125rem;
-  }
-
-  h6 {
-    font-size: 1rem;
-  }
+  font-weight: 700;
 }
 
 /* A elements that don't have a class get default styles */
@@ -200,6 +124,32 @@ textarea:not([rows]) {
   border-radius: 2px;
 }
 
+/* Scrollbar personalizada */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f3f4;
+  border-radius: 0.25rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ced4da;
+  border-radius: 0.25rem;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #adb5bd;
+}
+
+/* Seleção de texto */
+::selection {
+  background-color: #b3d7ff;
+  color: #0056b3;
+}
+
 /* Form elements */
 input,
 textarea,
@@ -230,25 +180,29 @@ input:invalid:focus {
 /* Labels */
 label {
   display: block;
-  margin-bottom: 0.25rem;
-  font-weight: 500;
-  color: #374151;
+  /* margin-bottom: 0.25rem; */
+  font-weight: 700;
+  /* color: #374151; */
 }
 
 /* Lists */
 ul,
 ol {
-  margin-bottom: 1rem;
-  padding-left: 1.5rem;
+  /* margin-bottom: 1rem;
+  padding-left: 1.5rem; */
 }
 
 li {
-  margin-bottom: 0.25rem;
+  /* margin-bottom: 0.25rem; */
+}
+
+.hidden {
+  display: none !important;
 }
 
 .container {
   width: 100%;
-  max-width: 1200px;
+  max-width: 960px;
   margin: 0 auto;
   padding: 0 1rem;
 }
