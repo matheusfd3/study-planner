@@ -27,12 +27,12 @@ class StudyPlannerApp {
     const ongoingCourses = this.storage.getCoursesByStatus(APP_CONFIG.COURSE_STATUS.ONGOING);
     const completedCourses = this.storage.getCoursesByStatus(APP_CONFIG.COURSE_STATUS.COMPLETED);
 
-    this.renderCourseList(APP_CONFIG.DOM_LIST_IDS.ONGOING, ongoingCourses);
-    this.renderCourseList(APP_CONFIG.DOM_LIST_IDS.COMPLETED, completedCourses);
+    this.renderCourseList(APP_CONFIG.DOM_LIST_SELECTORS.ONGOING, ongoingCourses);
+    this.renderCourseList(APP_CONFIG.DOM_LIST_SELECTORS.COMPLETED, completedCourses);
   }
 
-  renderCourseList(listId, courses) {
-    const listElement = document.getElementById(listId);
+  renderCourseList(listSelector, courses) {
+    const listElement = document.querySelector(listSelector);
     listElement.innerHTML = '';
     
     if (courses.length === 0) {
@@ -105,15 +105,15 @@ class StudyPlannerApp {
               ${
                 stats.status === APP_CONFIG.COURSE_STATUS.ONGOING ? 
                 `
-                  <button class="progress-button" onClick="() => {}">+ Progresso</button>
-                  <button class="complete-button" onClick="() => {handleCompleteCourse(${stats.id})}">Finalizar</button>
+                  <button class="progress-button" onClick="${() => {this.progressModal.open(course)}}">Progresso</button>
+                  <button class="complete-button" onClick="${() => {handleCompleteCourse(stats.id)}}">Finalizar</button>
                 ` : 
                 `
-                  <button class="reopen-button" onClick="() => {handleReopenCourse(${stats.id})}">Reabrir</button>
+                  <button class="reopen-button" onClick="${() => {handleReopenCourse(stats.id)}}">Reabrir</button>
                 `
               }
-              <button class="edit-button" onClick="() => {}">Editar</button>
-              <button class="delete-button" onClick="() => {handleDeleteCourse(${stats.id})}">Excluir</button>
+              <button class="edit-button" onClick="${() => {this.editModal.open(course)}}">Editar</button>
+              <button class="delete-button" onClick="${() => {handleDeleteCourse(stats.id)}}">Excluir</button>
             </div>
           </div>
         </li>
@@ -124,7 +124,7 @@ class StudyPlannerApp {
   }
 
   renderEmptyMessage(container) {
-    if (container.id === APP_CONFIG.DOM_LIST_IDS.ONGOING) {
+    if (container.id === APP_CONFIG.DOM_LIST_SELECTORS.ONGOING) {
       container.innerHTML = `
         <li class="empty-message">
           <div class="empty-icon">📚</div>
@@ -132,7 +132,7 @@ class StudyPlannerApp {
           <p class="empty-subtitle">Clique em "Criar Novo Plano" para começar seus estudos!</p>
         </li>
       `;
-    } else if (container.id === APP_CONFIG.DOM_LIST_IDS.COMPLETED) {
+    } else if (container.id === APP_CONFIG.DOM_LIST_SELECTORS.COMPLETED) {
       container.innerHTML = `
         <li class="empty-message">
           <div class="empty-icon">🎓</div>

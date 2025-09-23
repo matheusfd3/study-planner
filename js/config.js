@@ -4,8 +4,13 @@ export const APP_CONFIG = {
     ONGOING: 'ongoing',
     COMPLETED: 'completed'
   },
-  DOM_LIST_IDS: {
-    ONGOING: 'ongoing-courses',
-    COMPLETED: 'completed-courses'
+  DOM_LIST_SELECTORS: {
+    ONGOING: '#ongoing-courses',
+    COMPLETED: '#completed-courses'
+  },
+  DOM_MODALS_SELECTORS: {
+    CREATE: '#create-course-modal',
+    EDIT: '#edit-course-modal',
+    PROGRESS: '#progress-modal'
   }
 };
