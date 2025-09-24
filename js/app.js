@@ -6,9 +6,9 @@ import { getCourseStats } from './modules/courseCalculations.js';
 class StudyPlannerApp {
   constructor() {
     this.storage = new StorageManager(APP_CONFIG.STORAGE_KEY);
-    this.createModal = new CreateModal(APP_CONFIG.DOM_MODALS_SELECTORS.CREATE, this.handleCreateCourse.bind(this));
-    this.editModal = new EditModal(APP_CONFIG.DOM_MODALS_SELECTORS.EDIT, this.handleUpdateCourse.bind(this));
-    this.progressModal = new ProgressModal(APP_CONFIG.DOM_MODALS_SELECTORS.PROGRESS, this.handleUpdateProgress.bind(this));
+    this.createModal = new CreateModal('#create-course-modal', this.handleCreateCourse.bind(this));
+    this.editModal = new EditModal('#edit-course-modal', this.handleUpdateCourse.bind(this));
+    this.progressModal = new ProgressModal('#progress-course-modal', this.handleUpdateProgress.bind(this));
     this.initializeApp();
   }
 
