@@ -7,5 +7,14 @@ export const APP_CONFIG = {
   DOM_LIST_SELECTORS: {
     ONGOING: '#ongoing-courses',
     COMPLETED: '#completed-courses'
+  },
+  DAYS_SHORT: {
+    'sunday': 'Dom',
+    'monday': 'Seg',
+    'tuesday': 'Ter',
+    'wednesday': 'Qua',
+    'thursday': 'Qui',
+    'friday': 'Sex',
+    'saturday': 'Sáb'
   }
 };

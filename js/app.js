@@ -1,14 +1,14 @@
 import { APP_CONFIG } from './config.js';
 import { StorageManager } from './modules/storage.js';
 import { CreateModal, EditModal, ProgressModal } from './modules/modals.js';
-import { getCourseStats } from './modules/courseCalculations.js';
+import { calculateCourseStats } from './modules/courseCalculations.js';
 
 class StudyPlannerApp {
   constructor() {
     this.storage = new StorageManager(APP_CONFIG.STORAGE_KEY);
-    this.createModal = new CreateModal('#create-course-modal', this.handleCreateCourse.bind(this));
-    this.editModal = new EditModal('#edit-course-modal', this.handleUpdateCourse.bind(this));
-    this.progressModal = new ProgressModal('#progress-course-modal', this.handleUpdateProgress.bind(this));
+    // this.createModal = new CreateModal('#create-course-modal', this.handleCreateCourse.bind(this));
+    // this.editModal = new EditModal('#edit-course-modal', this.handleUpdateCourse.bind(this));
+    // this.progressModal = new ProgressModal('#progress-course-modal', this.handleUpdateProgress.bind(this));
     this.initializeApp();
   }
 
@@ -46,7 +46,7 @@ class StudyPlannerApp {
 
     let innerHTML = '';
     courses.forEach(course => {
-      const stats = getCourseStats(course);
+      const stats = calculateCourseStats(course);
       innerHTML += `
         <li class="course-item" course-id="${stats.id}">
           <div class="course-content">
@@ -60,12 +60,12 @@ class StudyPlannerApp {
                     <span>${stats.totalDuration}</span>
                   </p>
                   <p>
-                    <strong>Horas por Dia:</strong>
-                    <span>${stats.hoursPerDay}</span>
-                  </p>
-                  <p>
                     <strong>Horas Restantes:</strong>
                     <span>${stats.hoursRemaining}</span>
+                  </p>
+                  <p>
+                    <strong>Horas por Dia:</strong>
+                    <span>${stats.dailyStudy}</span>
                   </p>
                   <p>
                     <strong>Data da Finalização:</strong>
@@ -76,7 +76,7 @@ class StudyPlannerApp {
                   <h4>📅 Dias & Descanso</h4>
                   <p>
                     <strong>Dias Restantes:</strong>
-                    <span>${stats.daysRemaining} dias</span>
+                    <span>${stats.totalDays} dias</span>
                   </p>
                   <p>
                     <strong>Dias de Estudo:</strong>
@@ -84,11 +84,11 @@ class StudyPlannerApp {
                   </p>
                   <p>
                     <strong>Dias de Folga:</strong>
-                    <span>${stats.restDays} dias</span>
+                    <span>${stats.daysOff} dias</span>
                   </p>
                   <p>
                     <strong>Dias de Descanso:</strong>
-                    <span>${stats.restDayNames.join(', ')}</span>
+                    <span>${stats.daysOffNames.join(', ')}</span>
                   </p>
                 </div>
               </div>
