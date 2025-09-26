@@ -128,15 +128,15 @@ class StudyPlannerApp {
   }
 
   renderEmptyMessage(container) {
-    if (container.id === APP_CONFIG.DOM_LIST_SELECTORS.ONGOING) {
+    if (`#${container.id}` === APP_CONFIG.DOM_LIST_SELECTORS.ONGOING) {
       container.innerHTML = `
-        <li class="empty-message">
-          <div class="empty-icon">📚</div>
-          <h3 class="empty-title">Nenhum curso em andamento</h3>
-          <p class="empty-subtitle">Clique em "Criar Novo Plano" para começar seus estudos!</p>
-        </li>
+      <li class="empty-message">
+      <div class="empty-icon">📚</div>
+      <h3 class="empty-title">Nenhum curso em andamento</h3>
+      <p class="empty-subtitle">Clique em "Criar Novo Plano" para começar seus estudos!</p>
+      </li>
       `;
-    } else if (container.id === APP_CONFIG.DOM_LIST_SELECTORS.COMPLETED) {
+    } else if (`#${container.id}` === APP_CONFIG.DOM_LIST_SELECTORS.COMPLETED) {
       container.innerHTML = `
         <li class="empty-message">
           <div class="empty-icon">🎓</div>
