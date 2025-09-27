@@ -143,5 +143,10 @@ function formatDateBR(date) {
  * Formata contagem para exibição, retornando "Nenhum" para valores <= 0
  */
 function formatCountOrNone(count) {
-  return count <= 0 ? 'Nenhum' : count;
+  if (count <= 0) {
+    return 'Nenhum';
+  } else if (count == 1) {
+    return '1 dia';
+  }
+  return `${count} dias`;
 }
