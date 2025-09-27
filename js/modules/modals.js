@@ -51,9 +51,10 @@ class Modal {
   afterInit() {}
 }
 export class CreateModal extends Modal {
-  constructor(selector, handleSubmit) {
+  constructor(selector, handleSubmit, notification) {
     super(selector);
     this.handleSubmit = handleSubmit;
+    this.notification = notification;
   }
 
   afterInit() {
@@ -79,6 +80,7 @@ export class CreateModal extends Modal {
       if (!daysOffValidation.isValid) errors.push(daysOffValidation.message);
 
       if (errors.length > 0) {
+        errors.forEach(err => this.notification.warning(err));
         return
       }
 
@@ -100,6 +102,7 @@ export class CreateModal extends Modal {
       document.querySelectorAll('.checkbox-item').forEach((item) => {
         item.querySelector('input[type="checkbox"]').dispatchEvent(new Event('change'));
       });
+      this.modal.querySelector('.modal-content').scrollTo(0, 0);
     }, 100);
   }
 }

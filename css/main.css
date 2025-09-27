@@ -1,5 +1,6 @@
 @import './base.css';
 @import './components/modals.css';
+@import './components/notifications.css';
 
 .page-title {
   color: #2d3748;

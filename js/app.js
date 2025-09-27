@@ -1,14 +1,16 @@
 import { APP_CONFIG } from './config.js';
 import { MyStorageManager } from './modules/storage.js';
+import { NotificationManager } from './modules/notifications.js';
 import { CreateModal, EditModal, ProgressModal } from './modules/modals.js';
 import { calculateCourseStats } from './modules/courseCalculations.js';
 
 class StudyPlannerApp {
   constructor() {
     this.storage = new MyStorageManager(APP_CONFIG.STORAGE_KEY);
-    this.createModal = new CreateModal('#create-modal', this.handleCreateCourse.bind(this));
-    // this.editModal = new EditModal('#edit-course-modal', this.handleUpdateCourse.bind(this));
-    // this.progressModal = new ProgressModal('#progress-course-modal', this.handleUpdateProgress.bind(this));
+    this.notification = new NotificationManager();
+    this.createModal = new CreateModal('#create-modal', this.handleCreateCourse.bind(this), this.notification);
+    // this.editModal = new EditModal('#edit-course-modal', this.handleUpdateCourse.bind(this), this.notification);
+    // this.progressModal = new ProgressModal('#progress-course-modal', this.handleUpdateProgress.bind(this), this.notification);
     this.initializeApp();
   }
 
@@ -59,6 +61,7 @@ class StudyPlannerApp {
       studySessions: [],
     }
     this.storage.addCourse(newCourse);
+    this.notification.success('Curso criado com sucesso!');
     this.loadCourseList();
   }
 
@@ -69,6 +72,7 @@ class StudyPlannerApp {
         : APP_CONFIG.COURSE_STATUS.ONGOING;
 
       this.storage.updateCourse(course);
+      this.notification.success(`Curso ${course.status === APP_CONFIG.COURSE_STATUS.ONGOING ? 'reaberto' : 'finalizado'} com sucesso!`);
       this.loadCourseList();
     }
   }
@@ -76,6 +80,7 @@ class StudyPlannerApp {
   handleDeleteCourse(course) {
     if (confirm(`Tem certeza que deseja excluir o curso "${course.title}"?`)) {
       this.storage.deleteCourse(course.id);
+      this.notification.success('Curso excluído com sucesso!');
       this.loadCourseList();
     }
   }
