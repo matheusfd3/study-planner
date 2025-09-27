@@ -6,17 +6,15 @@ import { calculateCourseStats } from './modules/courseCalculations.js';
 class StudyPlannerApp {
   constructor() {
     this.storage = new StorageManager(APP_CONFIG.STORAGE_KEY);
-    // this.createModal = new CreateModal('#create-course-modal', this.handleCreateCourse.bind(this));
+    this.createModal = new CreateModal('#create-modal', this.handleCreateCourse.bind(this));
     // this.editModal = new EditModal('#edit-course-modal', this.handleUpdateCourse.bind(this));
     // this.progressModal = new ProgressModal('#progress-course-modal', this.handleUpdateProgress.bind(this));
     this.initializeApp();
   }
 
   initializeApp() {
-    document.addEventListener('DOMContentLoaded', () => {
-      this.bindEventListeners();
-      this.loadCourseList();
-    });
+    this.bindEventListeners();
+    this.loadCourseList();
   }
 
   bindEventListeners() {
@@ -25,7 +23,41 @@ class StudyPlannerApp {
         this.loadCourseList();
       }
     });
+
+    document.querySelector('#create-study-plan-button').addEventListener('click', () => {
+      this.createModal.open();
+    });
+
+    document.querySelectorAll('input[type="text"][placeholder*="00:00:00"]').forEach(input => {
+      input.addEventListener('input', (e) => {
+        let value = e.target.value.replace(/\D/g, ''); // Remove tudo que não for número
+        if (value.length > 6) value = value.slice(0, 6);
+
+        let masked = '';
+        if (value.length > 0) masked = value.slice(0, 2);
+        if (value.length > 2) masked += ':' + value.slice(2, 4);
+        if (value.length > 4) masked += ':' + value.slice(4, 6);
+
+        e.target.value = masked;
+      });
+    });
+
+    document.querySelectorAll('.checkbox-item').forEach((item) => {
+      const label = item.querySelector('label');
+      const checkbox = item.querySelector('input[type="checkbox"]');
+
+      item.addEventListener('click', function(e) {
+        if (e.target.tagName.toLowerCase() === 'label') return;
+        label.click();
+      });
+
+      checkbox.addEventListener('change', function() {
+        item.classList.toggle('selected', checkbox.checked);
+      });
+    });
   }
+
+  handleCreateCourse(courseData) {}
 
   loadCourseList() {
     const ongoingCourses = this.storage.getCoursesByStatus(APP_CONFIG.COURSE_STATUS.ONGOING);
