@@ -1,3 +1,10 @@
+import {
+  validateCourseTitle,
+  validateCourseDuration,
+  validateTargetDate,
+  validateDaysOffWeek,
+} from './validations.js';
+
 class Modal {
   constructor(selector) {
     this.selector = selector;
@@ -52,7 +59,37 @@ export class CreateModal extends Modal {
   afterInit() {
     this.form.addEventListener('submit', (e) => {
       e.preventDefault();
-      this.handleSubmit();
+
+      const formData = new FormData(this.form);
+      const data = Object.fromEntries(formData.entries());
+      data['create-days-off'] = formData.getAll('create-days-off');
+
+      const errors = [];
+
+      const titleValidation = validateCourseTitle(data['create-title']);
+      if (!titleValidation.isValid) errors.push(titleValidation.message);
+
+      const durationValidation = validateCourseDuration(data['create-duration']);
+      if (!durationValidation.isValid) errors.push(durationValidation.message);
+
+      const dateValidation = validateTargetDate(data['create-target-date']);
+      if (!dateValidation.isValid) errors.push(dateValidation.message);
+
+      const daysOffValidation = validateDaysOffWeek(data['create-days-off']);
+      if (!daysOffValidation.isValid) errors.push(daysOffValidation.message);
+
+      if (errors.length > 0) {
+        return
+      }
+
+      const formattedData = {
+        title: data['create-title'].trim(),
+        totalDuration: data['create-duration'],
+        targetDate: data['create-target-date'],
+        daysOff: data['create-days-off'],
+      };
+
+      this.handleSubmit(formattedData);
       this.close();
     });
   }

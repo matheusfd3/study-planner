@@ -1,4 +1,4 @@
-export class StorageManager {
+export class MyStorageManager {
   constructor(storageKey) {
     this.storageKey = storageKey;
   }

@@ -1,11 +1,11 @@
 import { APP_CONFIG } from './config.js';
-import { StorageManager } from './modules/storage.js';
+import { MyStorageManager } from './modules/storage.js';
 import { CreateModal, EditModal, ProgressModal } from './modules/modals.js';
 import { calculateCourseStats } from './modules/courseCalculations.js';
 
 class StudyPlannerApp {
   constructor() {
-    this.storage = new StorageManager(APP_CONFIG.STORAGE_KEY);
+    this.storage = new MyStorageManager(APP_CONFIG.STORAGE_KEY);
     this.createModal = new CreateModal('#create-modal', this.handleCreateCourse.bind(this));
     // this.editModal = new EditModal('#edit-course-modal', this.handleUpdateCourse.bind(this));
     // this.progressModal = new ProgressModal('#progress-course-modal', this.handleUpdateProgress.bind(this));
@@ -18,12 +18,6 @@ class StudyPlannerApp {
   }
 
   bindEventListeners() {
-    window.addEventListener('storage', (event) => {
-      if (event.key === APP_CONFIG.STORAGE_KEY) {
-        this.loadCourseList();
-      }
-    });
-
     document.querySelector('#create-study-plan-button').addEventListener('click', () => {
       this.createModal.open();
     });
@@ -57,7 +51,16 @@ class StudyPlannerApp {
     });
   }
 
-  handleCreateCourse(courseData) {}
+  handleCreateCourse(courseData) {
+    const newCourse = {
+      ...courseData,
+      id: crypto.randomUUID(),
+      status: APP_CONFIG.COURSE_STATUS.ONGOING,
+      studySessions: [],
+    }
+    this.storage.addCourse(newCourse);
+    this.loadCourseList();
+  }
 
   loadCourseList() {
     const ongoingCourses = this.storage.getCoursesByStatus(APP_CONFIG.COURSE_STATUS.ONGOING);
