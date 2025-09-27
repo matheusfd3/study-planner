@@ -170,14 +170,6 @@ select:focus {
   box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
 }
 
-input:invalid {
-  border-color: #dc2626;
-}
-
-input:invalid:focus {
-  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
-}
-
 /* Labels */
 label {
   display: block;
