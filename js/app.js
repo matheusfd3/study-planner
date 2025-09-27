@@ -62,6 +62,24 @@ class StudyPlannerApp {
     this.loadCourseList();
   }
 
+  handleToggleCourseStatus(course) {
+    if (confirm(`Tem certeza que deseja ${course.status === APP_CONFIG.COURSE_STATUS.ONGOING ? 'concluir' : 'retomar'} o curso "${course.title}"?`)) {
+      course.status = course.status === APP_CONFIG.COURSE_STATUS.ONGOING
+        ? APP_CONFIG.COURSE_STATUS.COMPLETED
+        : APP_CONFIG.COURSE_STATUS.ONGOING;
+
+      this.storage.updateCourse(course);
+      this.loadCourseList();
+    }
+  }
+
+  handleDeleteCourse(course) {
+    if (confirm(`Tem certeza que deseja excluir o curso "${course.title}"?`)) {
+      this.storage.deleteCourse(course.id);
+      this.loadCourseList();
+    }
+  }
+
   loadCourseList() {
     const ongoingCourses = this.storage.getCoursesByStatus(APP_CONFIG.COURSE_STATUS.ONGOING);
     const completedCourses = this.storage.getCoursesByStatus(APP_CONFIG.COURSE_STATUS.COMPLETED);
@@ -111,15 +129,15 @@ class StudyPlannerApp {
                   <h4>📅 Dias & Descanso</h4>
                   <p>
                     <strong>Dias Restantes:</strong>
-                    <span>${stats.totalDays} dias</span>
+                    <span>${stats.totalDays}</span>
                   </p>
                   <p>
                     <strong>Dias de Estudo:</strong>
-                    <span>${stats.studyDays} dias</span>
+                    <span>${stats.studyDays}</span>
                   </p>
                   <p>
                     <strong>Dias de Folga:</strong>
-                    <span>${stats.daysOff} dias</span>
+                    <span>${stats.daysOff}</span>
                   </p>
                   <p>
                     <strong>Dias de Descanso:</strong>
@@ -144,15 +162,15 @@ class StudyPlannerApp {
               ${
                 stats.status === APP_CONFIG.COURSE_STATUS.ONGOING ? 
                 `
-                  <button class="progress-button" onClick="${() => {this.progressModal.open(course)}}">Progresso</button>
-                  <button class="complete-button" onClick="${() => {handleCompleteCourse(stats.id)}}">Finalizar</button>
+                  <button class="progress-button" data-id="${stats.id}" data-action="progress-modal">Progresso</button>
+                  <button class="complete-button" data-id="${stats.id}" data-action="toggle-status">Finalizar</button>
                 ` : 
                 `
-                  <button class="reopen-button" onClick="${() => {handleReopenCourse(stats.id)}}">Reabrir</button>
+                  <button class="reopen-button" data-id="${stats.id}" data-action="toggle-status">Reabrir</button>
                 `
               }
-              <button class="edit-button" onClick="${() => {this.editModal.open(course)}}">Editar</button>
-              <button class="delete-button" onClick="${() => {handleDeleteCourse(stats.id)}}">Excluir</button>
+              <button class="edit-button" data-id="${stats.id}" data-action="edit-modal">Editar</button>
+              <button class="delete-button" data-id="${stats.id}" data-action="delete">Excluir</button>
             </div>
           </div>
         </li>
@@ -160,6 +178,30 @@ class StudyPlannerApp {
     });
 
     listElement.innerHTML = innerHTML;
+
+    listElement.querySelectorAll('button[data-action]').forEach(btn => {
+      const dataId = btn.getAttribute('data-id');
+      const course = this.storage.getCourseById(dataId);
+
+      btn.addEventListener('click', (e) => {
+        const dataAction = btn.getAttribute('data-action');
+
+        switch(dataAction) {
+          case 'progress-modal':
+            this.progressModal.open(course);
+            break;
+          case 'toggle-status':
+            this.handleToggleCourseStatus(course);
+            break;
+          case 'edit':
+            this.editModal.open(course);
+            break;
+          case 'delete':
+            this.handleDeleteCourse(course);
+            break;
+        }
+      });
+    });
   }
 
   renderEmptyMessage(container) {
