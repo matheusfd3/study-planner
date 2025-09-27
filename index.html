@@ -52,6 +52,62 @@
     </section>
   </main>
 
+  <!-- Create Modal -->
+  <div id="create-modal" class="modal-overlay">
+    <div class="modal-content">
+      <h2>Novo Plano de Estudos</h2>
+      <form>
+        <label for="create-course-title">Nome do Curso:</label>
+        <input type="text" id="create-course-title" name="course-title" required>
+
+        <label for="create-course-duration">Total de Horas (HH:MM:SS):</label>
+        <input type="text" id="create-course-duration" class="font-duration" name="course-duration"
+          placeholder="00:00:00" required>
+
+        <label for="create-target-date">Data de Conclusão:</label>
+        <input type="date" id="create-target-date" name="target-date" required>
+
+        <div class="days-off-container">
+          <label>Dias de Descanso:</label>
+          <div class="days-off-grid">
+            <div class="checkbox-item">
+              <input type="checkbox" id="create-sunday" name="create-days-off" value="sunday">
+              <label for="create-sunday">Domingo</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="create-monday" name="create-days-off" value="monday">
+              <label for="create-monday">Segunda-feira</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="create-tuesday" name="create-days-off" value="tuesday">
+              <label for="create-tuesday">Terça-feira</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="create-wednesday" name="create-days-off" value="wednesday">
+              <label for="create-wednesday">Quarta-feira</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="create-thursday" name="create-days-off" value="thursday">
+              <label for="create-thursday">Quinta-feira</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="create-friday" name="create-days-off" value="friday">
+              <label for="create-friday">Sexta-feira</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="create-saturday" name="create-days-off" value="saturday">
+              <label for="create-saturday">Sábado</label>
+            </div>
+          </div>
+        </div>
+        <div class="button-group">
+          <button type="submit">Criar Plano</button>
+          <button type="button" class="close-button">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <script type="module" src="js/app.js"></script>
   <script nomodule>
     alert('Seu navegador não suporta módulos JavaScript. Por favor, atualize para uma versão mais recente.');
