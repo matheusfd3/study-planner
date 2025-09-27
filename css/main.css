@@ -1,4 +1,5 @@
 @import './base.css';
+@import './components/modals.css';
 
 .page-title {
   color: #2d3748;
