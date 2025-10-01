@@ -164,7 +164,33 @@
     </div>
   </div>
 
-  <!-- Container de notificações -->
+  <!-- Progress Modal -->
+  <div id="progress-modal" class="modal-overlay">
+    <div class="modal-content">
+      <h2>Adicionar Progresso</h2>
+      <form>
+        <label for="progress-duration">Horas Estudadas:</label>
+        <input type="text" id="progress-duration" class="font-duration" name="progress-duration" placeholder="00:00:00">
+
+        <label for="progress-date">Data de Conclusão:</label>
+        <input type="date" id="progress-date" name="progress-date">
+        <button type="button" class="add-progress-button">Adicionar Progresso</button>
+
+        <div class="progress-section">
+          <label>Progressos Registrados:</label>
+          <div class="progress-list">
+          </div>
+        </div>
+
+        <div class="button-group">
+          <button type="submit">Salvar Alterações</button>
+          <button type="button" class="close-button">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- notifications container -->
   <div id="notifications" class="notification-container" aria-live="polite" aria-label="Notificações"></div>
 
   <script type="module" src="js/app.js"></script>

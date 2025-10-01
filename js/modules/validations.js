@@ -45,6 +45,30 @@ export function validateTargetDate(targetDate) {
   return { isValid: true, message: '' };
 }
 
+export function validateProgressDate(progressDate) {
+  if (progressDate.trim().length === 0) {
+    return { isValid: false, message: 'A data da sessão de estudo é obrigatória.' };
+  }
+  return { isValid: true, message: '' };
+}
+
+export function validateProgressDuration(duration) {
+  if (duration.trim().length === 0) {
+    return { isValid: false, message: 'A duração da sessão de estudo é obrigatória.' };
+  }
+
+  const timePattern = /^(?:\d{2}):[0-5]\d:[0-5]\d$/;
+  if (!timePattern.test(duration)) {
+    return { isValid: false, message: 'A duração deve estar no formato HH:MM:SS.' };
+  }
+
+  if (duration === '00:00:00') {
+    return { isValid: false, message: 'A duração da sessão de estudo deve ser maior que 00:00:00.' };
+  }
+
+  return { isValid: true, message: '' };
+}
+
 export function validateDaysOffWeek(selectedDays) {
   if (selectedDays.length >= 7) {
     return { isValid: false, message: 'Você deve ter pelo menos um dia de estudo por semana.' };

@@ -10,7 +10,7 @@ class StudyPlannerApp {
     this.notification = new NotificationManager();
     this.createModal = new CreateModal('#create-modal', this.handleCreateCourse.bind(this), this.notification);
     this.editModal = new EditModal('#edit-modal', this.handleUpdateCourse.bind(this), this.notification);
-    // this.progressModal = new ProgressModal('#progress-course-modal', this.handleUpdateProgress.bind(this), this.notification);
+    this.progressModal = new ProgressModal('#progress-modal', this.handleUpdateCourse.bind(this), this.notification);
     this.initializeApp();
   }
 

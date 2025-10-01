@@ -3,6 +3,8 @@ import {
   validateCourseDuration,
   validateTargetDate,
   validateDaysOffWeek,
+  validateProgressDate,
+  validateProgressDuration
 } from './validations.js';
 
 class Modal {
@@ -81,7 +83,7 @@ export class CreateModal extends Modal {
 
       if (errors.length > 0) {
         errors.forEach(err => this.notification.warning(err));
-        return
+        return;
       }
 
       const formattedData = {
@@ -146,7 +148,7 @@ export class EditModal extends Modal {
 
       if (errors.length > 0) {
         errors.forEach(err => this.notification.warning(err));
-        return
+        return;
       }
 
       this.handleSubmit(this.currentCourse);
@@ -175,22 +177,88 @@ export class EditModal extends Modal {
 }
 
 export class ProgressModal extends Modal {
-  constructor(selector, handleSubmit) {
+  constructor(selector, handleSubmit, notification) {
     super(selector);
     this.handleSubmit = handleSubmit;
+    this.notification = notification;
   }
 
   afterInit() {
     this.form.addEventListener('submit', (e) => {
       e.preventDefault();
-      // Ainda vou validar com os dados do formulário aqui
       this.handleSubmit(this.currentCourse);
       this.close();
     });
+
+    this.form.querySelector('.add-progress-button').addEventListener('click', () => this.addProgress());
   }
 
   onOpen(course) {
-    this.currentCourse = course;
-    // Ainda vou preencher os campos do formulário aqui
+    this.currentCourse = JSON.parse(JSON.stringify(course));
+    this.renderStudySessions();
+    setTimeout(() => {
+      this.modal.querySelector('.modal-content').scrollTo(0, 0);
+      this.form.querySelector('input').focus();
+    }, 100);
+  }
+
+  addProgress() {
+    const formData = new FormData(this.form);
+    const data = Object.fromEntries(formData.entries());
+
+    const errors = [];
+
+    const durationValidation = validateProgressDuration(data['progress-duration']);
+    if (!durationValidation.isValid) errors.push(durationValidation.message);
+
+    const dateValidation = validateProgressDate(data['progress-date']);
+    if (!dateValidation.isValid) errors.push(dateValidation.message);
+
+    if (errors.length > 0) {
+      errors.forEach(err => this.notification.warning(err));
+      return;
+    }
+
+    this.currentCourse.studySessions.push({
+      date: data['progress-date'],
+      hoursStudied: data['progress-duration'],
+    });
+    this.renderStudySessions();
+    this.form.reset();
+  }
+
+  renderStudySessions() {
+    const progressList = this.form.querySelector('.progress-list');
+    progressList.innerHTML = '';
+
+    if (this.currentCourse.studySessions.length === 0) {
+      progressList.innerHTML = '<p class="no-progress">Nenhum progresso registrado ainda.</p>';
+      return;
+    }
+
+    this.currentCourse.studySessions.forEach(session => {
+      const item = document.createElement('div');
+
+      item.classList.add('progress-item');
+      item.innerHTML = `
+        <div class="progress-info">
+          <div class="progress-date">${session.date}</div>
+          <div class="progress-time">${session.hoursStudied}</div>
+        </div>
+      `;
+
+      const createRemoveButton = document.createElement('button');
+      createRemoveButton.type = 'button';
+      createRemoveButton.classList.add('remove-progress-button');
+      createRemoveButton.textContent = 'Remover';
+      createRemoveButton.addEventListener('click', () => {
+        if (confirm('Tem certeza que deseja remover este registro de progresso?')) {
+          this.currentCourse.studySessions = this.currentCourse.studySessions.filter(s => s !== session);
+          this.renderStudySessions();
+        }
+      });
+      item.appendChild(createRemoveButton);
+      progressList.appendChild(item);
+    });
   }
 }

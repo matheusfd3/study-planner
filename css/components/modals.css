@@ -99,14 +99,6 @@ body.no-scroll {
   margin: 0.5rem 0;
 }
 
-.modal-content form .progress-section {
-  background-color: #f7fafc;
-  padding: 1.25rem;
-  border-radius: 8px;
-  border: 1px solid #e2e8f0;
-  margin: 0.5rem 0;
-}
-
 .modal-content form .days-off-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -192,4 +184,96 @@ body.no-scroll {
   background-color: #cbd5e0;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.modal-content form .progress-section {
+  background-color: #f7fafc;
+  padding: 1.25rem;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  margin: 0.5rem 0;
+}
+
+.modal-content form .progress-section>label {
+  margin-bottom: .25rem;
+}
+
+.modal-content form .add-progress-button {
+  flex: 1;
+  margin-top: 0.5rem;
+  padding: 0.875rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  background: linear-gradient(135deg, #4299e1, #3182ce);
+  color: white;
+}
+
+.modal-content form .add-progress-button:hover {
+  background: linear-gradient(135deg, #3182ce, #2c5aa0);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(66, 153, 225, 0.3);
+}
+
+.modal-content form .progress-section .progress-list {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.modal-content form .progress-section .no-progress {
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  padding: 1.25rem;
+}
+
+.modal-content form .progress-section .progress-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  margin-top: 0.5rem;
+  background-color: white;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  transition: all 0.2s ease;
+}
+
+.modal-content form .progress-section .progress-item:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+.modal-content form .progress-section .progress-info {
+  flex: 1;
+}
+
+.modal-content form .progress-section .progress-date {
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 0.25rem;
+}
+
+.modal-content form .progress-section .progress-time {
+  color: #666;
+  font-size: 0.9rem;
+  font-family: 'Courier New', Consolas, monospace;
+}
+
+.modal-content form .progress-section .remove-progress-button {
+  background: linear-gradient(135deg, #e53e3e, #c53030);
+  color: white;
+  border: none;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+
+.modal-content form .progress-section .remove-progress-button:hover {
+  background: linear-gradient(135deg, #c53030, #9c2626);
+  transform: scale(1.05);
 }
