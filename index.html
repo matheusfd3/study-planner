@@ -67,7 +67,7 @@
         <label for="create-target-date">Data de Conclusão:</label>
         <input type="date" id="create-target-date" name="create-target-date" required>
 
-        <div class="days-off-container">
+        <div class="days-off-section">
           <label>Dias de Descanso:</label>
           <div class="days-off-grid">
             <div class="checkbox-item">
@@ -102,6 +102,62 @@
         </div>
         <div class="button-group">
           <button type="submit">Criar Plano</button>
+          <button type="button" class="close-button">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Edit Modal -->
+  <div id="edit-modal" class="modal-overlay">
+    <div class="modal-content">
+      <h2>Editar Plano de Estudos</h2>
+      <form>
+        <label for="edit-course-title">Nome do Curso:</label>
+        <input type="text" id="edit-course-title" name="edit-title" required>
+
+        <label for="edit-course-duration">Total de Horas (HH:MM:SS):</label>
+        <input type="text" id="edit-course-duration" class="font-duration" name="edit-duration" placeholder="00:00:00"
+          required>
+
+        <label for="edit-target-date">Data de Conclusão:</label>
+        <input type="date" id="edit-target-date" name="edit-target-date" required>
+
+        <div class="days-off-section">
+          <label>Dias de Descanso:</label>
+          <div class="days-off-grid">
+            <div class="checkbox-item">
+              <input type="checkbox" id="edit-sunday" name="edit-days-off" value="sunday">
+              <label for="edit-sunday">Domingo</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="edit-monday" name="edit-days-off" value="monday">
+              <label for="edit-monday">Segunda-feira</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="edit-tuesday" name="edit-days-off" value="tuesday">
+              <label for="edit-tuesday">Terça-feira</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="edit-wednesday" name="edit-days-off" value="wednesday">
+              <label for="edit-wednesday">Quarta-feira</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="edit-thursday" name="edit-days-off" value="thursday">
+              <label for="edit-thursday">Quinta-feira</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="edit-friday" name="edit-days-off" value="friday">
+              <label for="edit-friday">Sexta-feira</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="edit-saturday" name="edit-days-off" value="saturday">
+              <label for="edit-saturday">Sábado</label>
+            </div>
+          </div>
+        </div>
+        <div class="button-group">
+          <button type="submit">Salvar Alterações</button>
           <button type="button" class="close-button">Cancelar</button>
         </div>
       </form>

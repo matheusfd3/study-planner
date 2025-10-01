@@ -98,25 +98,57 @@ export class CreateModal extends Modal {
 
   onOpen(data) {
     setTimeout(() => {
+      this.modal.querySelector('.modal-content').scrollTo(0, 0);
       this.form.querySelector('input').focus();
-      document.querySelectorAll('.checkbox-item').forEach((item) => {
+      this.form.querySelectorAll('.checkbox-item').forEach((item) => {
         item.querySelector('input[type="checkbox"]').dispatchEvent(new Event('change'));
       });
-      this.modal.querySelector('.modal-content').scrollTo(0, 0);
     }, 100);
   }
 }
 
 export class EditModal extends Modal {
-  constructor(selector, handleSubmit) {
+  constructor(selector, handleSubmit, notification) {
     super(selector);
     this.handleSubmit = handleSubmit;
+    this.notification = notification;
   }
 
   afterInit() {
     this.form.addEventListener('submit', (e) => {
       e.preventDefault();
-      // Ainda vou validar com os dados do formulário aqui
+      
+      const formData = new FormData(this.form);
+      const data = Object.fromEntries(formData.entries());
+      data['edit-days-off'] = formData.getAll('edit-days-off');
+
+      const errors = [];
+
+      this.currentCourse = {
+        ...this.currentCourse,
+        title: data['edit-title'].trim(),
+        totalDuration: data['edit-duration'],
+        targetDate: data['edit-target-date'],
+        daysOff: data['edit-days-off'],
+      }
+
+      const titleValidation = validateCourseTitle(this.currentCourse.title);
+      if (!titleValidation.isValid) errors.push(titleValidation.message);
+
+      const durationValidation = validateCourseDuration(this.currentCourse.totalDuration);
+      if (!durationValidation.isValid) errors.push(durationValidation.message);
+
+      const dateValidation = validateTargetDate(this.currentCourse.targetDate);
+      if (!dateValidation.isValid) errors.push(dateValidation.message);
+
+      const daysOffValidation = validateDaysOffWeek(this.currentCourse.daysOff);
+      if (!daysOffValidation.isValid) errors.push(daysOffValidation.message);
+
+      if (errors.length > 0) {
+        errors.forEach(err => this.notification.warning(err));
+        return
+      }
+
       this.handleSubmit(this.currentCourse);
       this.close();
     });
@@ -124,7 +156,21 @@ export class EditModal extends Modal {
 
   onOpen(course) {
     this.currentCourse = course;
-    // Ainda vou preencher os campos do formulário aqui
+    setTimeout(() => {
+      this.modal.querySelector('.modal-content').scrollTo(0, 0);
+      this.form.querySelector('input').focus();
+
+      this.form.querySelector('#edit-course-title').value = this.currentCourse.title;
+      this.form.querySelector('#edit-course-duration').value = this.currentCourse.totalDuration;
+      this.form.querySelector('#edit-target-date').value = this.currentCourse.targetDate;
+      this.form.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+        checkbox.checked = this.currentCourse.daysOff.includes(checkbox.value);
+      });
+
+      this.form.querySelectorAll('.checkbox-item').forEach((item) => {
+        item.querySelector('input[type="checkbox"]').dispatchEvent(new Event('change'));
+      });
+    }, 100);
   }
 }
 

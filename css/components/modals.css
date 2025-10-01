@@ -91,7 +91,15 @@ body.no-scroll {
   color: #a0aec0;
 }
 
-.modal-content form .days-off-container {
+.modal-content form .days-off-section {
+  background-color: #f7fafc;
+  padding: 1.25rem;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  margin: 0.5rem 0;
+}
+
+.modal-content form .progress-section {
   background-color: #f7fafc;
   padding: 1.25rem;
   border-radius: 8px;

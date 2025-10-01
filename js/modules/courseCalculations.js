@@ -89,7 +89,7 @@ function calculateStudyPeriod(startDate, endDate, daysOffList) {
  */
 function calculateCompletedStudyTime(sessions) {
   return sessions.reduce((total, session) => {
-    return total + convertTimeToSeconds(session.timeSpent);
+    return total + convertTimeToSeconds(session.hoursStudied);
   }, 0);
 }
 

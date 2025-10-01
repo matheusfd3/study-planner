@@ -9,7 +9,7 @@ class StudyPlannerApp {
     this.storage = new MyStorageManager(APP_CONFIG.STORAGE_KEY);
     this.notification = new NotificationManager();
     this.createModal = new CreateModal('#create-modal', this.handleCreateCourse.bind(this), this.notification);
-    // this.editModal = new EditModal('#edit-course-modal', this.handleUpdateCourse.bind(this), this.notification);
+    this.editModal = new EditModal('#edit-modal', this.handleUpdateCourse.bind(this), this.notification);
     // this.progressModal = new ProgressModal('#progress-course-modal', this.handleUpdateProgress.bind(this), this.notification);
     this.initializeApp();
   }
@@ -62,6 +62,12 @@ class StudyPlannerApp {
     }
     this.storage.addCourse(newCourse);
     this.notification.success('Curso criado com sucesso!');
+    this.loadCourseList();
+  }
+
+  handleUpdateCourse(updatedCourse) {
+    this.storage.updateCourse(updatedCourse);
+    this.notification.success('Curso atualizado com sucesso!');
     this.loadCourseList();
   }
 
@@ -198,7 +204,7 @@ class StudyPlannerApp {
           case 'toggle-status':
             this.handleToggleCourseStatus(course);
             break;
-          case 'edit':
+          case 'edit-modal':
             this.editModal.open(course);
             break;
           case 'delete':
@@ -213,9 +219,9 @@ class StudyPlannerApp {
     if (`#${container.id}` === APP_CONFIG.DOM_LIST_SELECTORS.ONGOING) {
       container.innerHTML = `
       <li class="empty-message">
-      <div class="empty-icon">📚</div>
-      <h3 class="empty-title">Nenhum curso em andamento</h3>
-      <p class="empty-subtitle">Clique em "Criar Novo Plano" para começar seus estudos!</p>
+        <div class="empty-icon">📚</div>
+        <h3 class="empty-title">Nenhum curso em andamento</h3>
+        <p class="empty-subtitle">Clique em "Criar Novo Plano" para começar seus estudos!</p>
       </li>
       `;
     } else if (`#${container.id}` === APP_CONFIG.DOM_LIST_SELECTORS.COMPLETED) {
