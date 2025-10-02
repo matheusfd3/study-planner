@@ -7,6 +7,8 @@ import {
   validateProgressDuration
 } from './validations.js';
 
+import { formatDateBR, getDateWithZeroTime } from './utils.js';
+
 class Modal {
   constructor(selector) {
     this.selector = selector;
@@ -199,6 +201,7 @@ export class ProgressModal extends Modal {
     setTimeout(() => {
       this.modal.querySelector('.modal-content').scrollTo(0, 0);
       this.form.querySelector('input').focus();
+      this.form.querySelector('#progress-date').value = getDateWithZeroTime(new Date()).toISOString().split('T')[0];
     }, 100);
   }
 
@@ -225,6 +228,8 @@ export class ProgressModal extends Modal {
     });
     this.renderStudySessions();
     this.form.reset();
+    this.form.querySelector('#progress-date').value = getDateWithZeroTime(new Date()).toISOString().split('T')[0];
+    this.form.querySelector('input').focus();
   }
 
   renderStudySessions() {
@@ -242,7 +247,7 @@ export class ProgressModal extends Modal {
       item.classList.add('progress-item');
       item.innerHTML = `
         <div class="progress-info">
-          <div class="progress-date">${session.date}</div>
+          <div class="progress-date">${formatDateBR(new Date(`${session.date}T00:00:00`))}</div>
           <div class="progress-time">${session.hoursStudied}</div>
         </div>
       `;
